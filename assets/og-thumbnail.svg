@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#041d15" stop-opacity=".96"/><stop offset=".56" stop-color="#073d2b" stop-opacity=".76"/><stop offset="1" stop-color="#073d2b" stop-opacity=".18"/></linearGradient></defs>
+  <image href="coast-course.png" width="1200" height="630" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="1200" height="630" fill="url(#shade)"/>
+  <text x="70" y="142" fill="#d7eb78" font-family="Noto Sans KR, Malgun Gothic, sans-serif" font-size="31" font-weight="800">탁 트인 바다와 푸른 코스가 만드는 특별한 라운딩</text>
+  <text x="70" y="255" fill="#fff" font-family="Noto Sans KR, Malgun Gothic, sans-serif" font-size="62" font-weight="900">중국 위해에서 누리는</text>
+  <text x="70" y="335" fill="#fff" font-family="Noto Sans KR, Malgun Gothic, sans-serif" font-size="66" font-weight="900">파크골프 투어</text>
+  <text x="70" y="432" fill="#ff8a24" stroke="#4b2100" stroke-width="1" paint-order="stroke" font-family="Noto Sans KR, Malgun Gothic, sans-serif" font-size="29" font-weight="800">마음껏 라운딩하고, 여유롭게 여행하는 특별한 시간</text>
+</svg>

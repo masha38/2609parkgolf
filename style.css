@@ -298,6 +298,7 @@ footer { padding: 48px 0 110px; color: rgba(255,255,255,.72); background: #0b211
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
+  .schedule-click-cue { animation: none !important; }
 }
 
 /* Destination-first funnel */
@@ -385,12 +386,40 @@ footer { padding: 48px 0 110px; color: rgba(255,255,255,.72); background: #0b211
 .brief-included span, .brief-notice span { color: rgba(255,255,255,.7); }
 .brief-notice { margin-bottom: 18px; background: rgba(0,0,0,.14); }
 .brief-notice b { color: #fff; }
-.source-schedule { margin-bottom: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 12px; }
-.source-schedule summary { position: relative; padding: 13px 42px 13px 15px; cursor: pointer; color: #fff; font-size: 13px; font-weight: 700; list-style: none; }
-.source-schedule summary::after { content: "+"; position: absolute; right: 16px; top: 7px; font-size: 22px; font-weight: 400; }
+.source-schedule { margin: 22px 0 18px; overflow: hidden; border: 2px solid var(--lime); border-radius: 16px; background: rgba(255,255,255,.05); box-shadow: 0 10px 28px rgba(0,0,0,.2); }
+.source-schedule summary { position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; min-height: 78px; padding: 12px 56px 12px 14px; cursor: pointer; color: var(--green-dark); background: linear-gradient(135deg, #e9f98e 0%, var(--lime) 58%, #b8dc36 100%); list-style: none; transition: filter .2s ease, transform .2s ease; }
+.source-schedule summary::-webkit-details-marker { display: none; }
+.source-schedule summary:hover { filter: brightness(1.06); }
+.source-schedule summary:focus-visible { outline: 3px solid #fff; outline-offset: -5px; }
+.source-schedule summary > span:not(.schedule-summary-icon) { display: grid; gap: 3px; }
+.source-schedule summary b { font-size: 16px; font-weight: 900; letter-spacing: -.02em; }
+.source-schedule summary small { color: rgba(7,61,43,.78); font-size: 11px; font-weight: 700; }
+.schedule-click-cue { display: inline-flex; align-items: center; margin-right: 3px; padding: 3px 7px; border-radius: 999px; color: #fff; background: #e5483f; font-size: 10px; font-weight: 900; box-shadow: 0 4px 12px rgba(229,72,63,.3); animation: schedule-click-pulse 1.15s ease-in-out infinite; }
+.schedule-summary-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #fff; font-size: 23px; box-shadow: 0 5px 14px rgba(7,61,43,.16); }
+.source-schedule summary::after { content: "+"; position: absolute; display: grid; place-items: center; right: 15px; top: 20px; width: 36px; height: 36px; border-radius: 50%; color: #fff; background: var(--green-dark); font-size: 23px; font-weight: 500; line-height: 1; box-shadow: 0 5px 14px rgba(7,61,43,.2); }
 .source-schedule[open] summary::after { content: "−"; }
+.source-schedule[open] summary { border-bottom: 2px solid var(--lime); }
+@keyframes schedule-click-pulse {
+  0%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+  50% { opacity: .55; transform: translateY(-4px) scale(1.08); }
+}
 .source-schedule img { max-height: 700px; object-fit: contain; background: #fff; }
+.schedule-zoom-link { display: block; position: relative; cursor: zoom-in; }
+.schedule-zoom-link::after { content: "🔍 클릭하여 크게 보기"; position: absolute; right: 12px; bottom: 12px; padding: 7px 10px; border: 2px solid #fff3df; border-radius: 999px; color: #fff; background: #f26722; font-size: 11px; font-weight: 900; box-shadow: 0 5px 18px rgba(160,55,0,.42); }
 .schedule-date-note { min-height: 0 !important; margin: 0 !important; padding: 12px 15px; color: #ffe6a3 !important; background: rgba(0,0,0,.2); font-size: 11px; }
+.schedule-lightbox { width: min(96vw, 1440px); max-width: none; height: 94vh; max-height: none; margin: auto; padding: 0; overflow: hidden; border: 0; border-radius: 18px; background: #eef2ef; box-shadow: 0 30px 100px rgba(0,0,0,.45); }
+.schedule-lightbox::backdrop { background: rgba(4,18,13,.82); backdrop-filter: blur(4px); }
+.schedule-lightbox[open] { display: grid; grid-template-rows: auto 1fr auto; }
+.schedule-lightbox-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 16px; color: #fff; background: var(--green-dark); }
+.schedule-lightbox-toolbar strong { overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.schedule-lightbox-actions { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
+.schedule-lightbox-actions button { min-width: 36px; height: 36px; padding: 0 11px; border: 1px solid rgba(255,255,255,.25); border-radius: 8px; color: #fff; background: rgba(255,255,255,.1); font: inherit; font-weight: 800; cursor: pointer; }
+.schedule-lightbox-actions button:hover { background: rgba(255,255,255,.2); }
+.schedule-lightbox-actions output { min-width: 48px; color: #fff; font-size: 12px; font-weight: 800; text-align: center; }
+.schedule-lightbox-actions .schedule-lightbox-close { min-width: auto; margin-left: 5px; background: var(--green); }
+.schedule-lightbox-viewport { overflow: auto; padding: 20px; text-align: center; overscroll-behavior: contain; }
+.schedule-lightbox-viewport img { display: block; height: auto; max-width: none; margin: 0 auto; background: #fff; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+.schedule-lightbox-hint { margin: 0; padding: 9px 16px; color: var(--muted); background: #fff; font-size: 11px; text-align: center; }
 .compare-shortcut { display: flex; margin: 22px auto 0; }
 
 .important-info { padding-top: 100px; }
@@ -428,6 +457,12 @@ footer { padding: 48px 0 110px; color: rgba(255,255,255,.72); background: #0b211
 }
 
 @media (max-width: 640px) {
+  .schedule-lightbox { width: 100vw; height: 100dvh; border-radius: 0; }
+  .schedule-lightbox-toolbar { padding: 10px; }
+  .schedule-lightbox-toolbar > strong { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .schedule-lightbox-actions { width: 100%; justify-content: center; }
+  .schedule-lightbox-actions .schedule-lightbox-close { margin-left: auto; }
+  .schedule-lightbox-viewport { padding: 10px; }
   .hero-destination h1 { max-width: 100%; font-size: 38px; line-height: 1.2; }
   .hero-destination .hero-lead { max-width: 100%; font-size: 17px; line-height: 1.65; }
   .mobile-only { display: block; }
@@ -462,4 +497,91 @@ footer { padding: 48px 0 110px; color: rgba(255,255,255,.72); background: #0b211
   .confidence { gap: 38px; }
   .confidence-photo, .confidence-photo img { min-height: 340px; height: 340px; }
   .confidence-copy li { grid-template-columns: 95px 1fr; }
+}
+
+/* Senior readability: larger type, stronger contrast and roomier controls */
+body { font-size: 18px; line-height: 1.78; }
+.brand b { font-size: 18px; }
+.brand small { font-size: 12px; letter-spacing: .12em; opacity: .9; }
+nav { font-size: 16px; }
+.eyebrow { font-size: 15px; letter-spacing: .12em; }
+.hero-lead { line-height: 1.65; }
+.hero-pills span { padding: 10px 16px; font-size: 16px; font-weight: 700; }
+.button { min-height: 60px; padding-inline: 28px; font-size: 18px; }
+.section-heading > p:last-child { font-size: 19px; line-height: 1.75; }
+.experience-bar-grid span { font-size: 14px; }
+.experience-bar-grid strong { font-size: 19px; }
+.experience-bar-grid small { color: #56625d; font-size: 15px; line-height: 1.5; }
+.need-lead { color: #56625d; font-size: 20px; line-height: 1.8; }
+.text-link { font-size: 17px; font-weight: 800; }
+.need-caption span { color: #56625d; font-size: 15px; }
+.needs-grid h3 { font-size: 25px; }
+.needs-grid p { color: #56625d; font-size: 17px; line-height: 1.8; }
+.story-card span { font-size: 13px; }
+.story-card h3 { font-size: 24px; }
+.story-card p { color: rgba(255,255,255,.9); font-size: 16px; line-height: 1.65; }
+.course-copy > p:not(.eyebrow) { color: rgba(255,255,255,.9); font-size: 19px; line-height: 1.8; }
+.course-tags span { padding: 10px 15px; font-size: 15px; }
+.tourism-grid figcaption span { color: rgba(255,255,255,.9); font-size: 15px; }
+.place-list span { padding: 10px 15px; font-size: 16px; }
+.departures .section-heading > p:last-child { color: rgba(255,255,255,.9); }
+.brief-top span { font-size: 16px; }
+.departure-brief p { color: rgba(255,255,255,.9); font-size: 17px; line-height: 1.8; }
+.brief-facts span { color: rgba(255,255,255,.9); font-size: 15px; line-height: 1.65; }
+.brief-facts b { font-size: 14px; }
+.brief-route li { padding-block: 14px; font-size: 15px; line-height: 1.7; }
+.brief-route li span { color: rgba(255,255,255,.88); }
+.brief-included, .brief-notice { padding: 18px; font-size: 15px; line-height: 1.75; }
+.brief-included span, .brief-notice span { color: rgba(255,255,255,.9); }
+.source-schedule summary { min-height: 88px; }
+.source-schedule summary b { font-size: 19px; }
+.source-schedule summary small { font-size: 14px; line-height: 1.55; }
+.schedule-click-cue { padding: 4px 9px; font-size: 12px; }
+.schedule-zoom-link::after { padding: 9px 12px; font-size: 14px; }
+.schedule-date-note { padding: 15px 17px; font-size: 14px; line-height: 1.7; }
+.schedule-lightbox-toolbar strong { font-size: 16px; }
+.schedule-lightbox-actions output { font-size: 14px; }
+.schedule-lightbox-hint { padding: 11px 16px; font-size: 14px; }
+.important-grid h3 { font-size: 21px; }
+.important-grid p { color: #56625d; font-size: 16px; line-height: 1.8; }
+.confidence-copy li b { font-size: 17px; }
+.confidence-copy li span { color: #56625d; font-size: 16px; }
+.fine { color: #626e69; font-size: 14px; line-height: 1.75; }
+.faq summary { padding-block: 27px; font-size: 21px; line-height: 1.55; }
+.faq details p { color: #56625d; font-size: 17px; line-height: 1.85; }
+.booking-steps li { padding: 30px 25px; }
+.booking-steps li > span { width: 48px; height: 48px; font-size: 14px; }
+.booking-steps b { font-size: 18px; }
+.booking-steps small { color: #56625d; font-size: 15px; line-height: 1.5; }
+.consult-copy p:last-of-type { color: rgba(255,255,255,.9); font-size: 19px; }
+legend { font-size: 21px; }
+.consult-form em { font-size: 14px; }
+.tour-option { min-height: 78px; padding: 18px; }
+.tour-option input { width: 24px; height: 24px; }
+.tour-option b { font-size: 15px; }
+.tour-option strong { font-size: 19px; }
+.tour-option small { color: #56625d; font-size: 16px; }
+.field-row label { font-size: 17px; }
+.field-row input { min-height: 58px; padding: 16px; font-size: 18px; }
+.privacy-copy { color: #59645f; font-size: 14px; line-height: 1.85; }
+.privacy-check { gap: 11px; font-size: 16px; line-height: 1.65; }
+.privacy-check input { width: 21px; height: 21px; flex: 0 0 auto; }
+.form-message { font-size: 16px; }
+.kakao-banner { min-height: 72px; font-size: 17px; }
+.footer-info { font-size: 15px; line-height: 1.7; }
+.footer-privacy { font-size: 14px; line-height: 1.8; }
+.footer-privacy p { color: rgba(255,255,255,.76); }
+.noscript { font-size: 16px; }
+
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .hero-destination .hero-lead { font-size: 20px; }
+  .experience-bar-grid strong { font-size: 17px; }
+  .experience-bar-grid small { font-size: 14px; }
+  .source-schedule summary { grid-template-columns: 44px 1fr; padding-right: 54px; }
+  .source-schedule summary b { font-size: 17px; }
+  .source-schedule summary small { font-size: 13px; }
+  .departure-brief p, .faq details p { font-size: 16px; }
+  .field-row { grid-template-columns: 1fr; }
+  .privacy-copy { font-size: 14px; }
 }

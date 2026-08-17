@@ -59,6 +59,61 @@ function configureKakaoLinks() {
   });
 }
 
+function enableScheduleLightbox() {
+  const dialog = document.querySelector('#schedule-lightbox');
+  const image = document.querySelector('#schedule-lightbox-image');
+  const title = document.querySelector('#schedule-lightbox-title');
+  const zoomValue = document.querySelector('#schedule-zoom-value');
+  const viewport = dialog?.querySelector('.schedule-lightbox-viewport');
+  if (!dialog || !image || !viewport || typeof dialog.showModal !== 'function') return;
+
+  let zoom = 1;
+  let baseWidth = 0;
+
+  function renderZoom() {
+    image.style.width = `${Math.round(baseWidth * zoom)}px`;
+    zoomValue.value = `${Math.round(zoom * 100)}%`;
+    zoomValue.textContent = zoomValue.value;
+  }
+
+  document.querySelectorAll('.schedule-zoom-link').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const preview = link.querySelector('img');
+      zoom = 1;
+      image.src = link.href;
+      image.alt = preview?.alt || '상세 일정표';
+      title.textContent = image.alt;
+      viewport.scrollTo(0, 0);
+      dialog.showModal();
+    });
+  });
+
+  image.addEventListener('load', () => {
+    baseWidth = Math.min(image.naturalWidth || 1024, Math.max(300, window.innerWidth * 0.88));
+    renderZoom();
+  });
+
+  dialog.querySelector('[data-schedule-zoom-in]').addEventListener('click', () => {
+    zoom = Math.min(2.5, zoom + 0.25);
+    renderZoom();
+  });
+
+  dialog.querySelector('[data-schedule-zoom-out]').addEventListener('click', () => {
+    zoom = Math.max(0.75, zoom - 0.25);
+    renderZoom();
+  });
+
+  dialog.querySelector('[data-schedule-close]').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    image.removeAttribute('src');
+    image.style.removeProperty('width');
+  });
+}
+
 document.querySelectorAll('.select-product').forEach((button) => {
   button.addEventListener('click', () => {
     const option = form.querySelector(`input[value="${button.dataset.product}"]`);
@@ -142,6 +197,7 @@ function enableRevealMotion() {
 window.addEventListener('scroll', updateHeader, { passive: true });
 setCampaignFields();
 configureKakaoLinks();
+enableScheduleLightbox();
 enableRevealMotion();
 updateHeader();
 updateSubmitState();
