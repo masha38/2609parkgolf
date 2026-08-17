@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+.env
+.env.*
+!.env.example
+work/
+*.inspect.ndjson
